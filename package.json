@@ -12,6 +12,7 @@
     "gulp-load-plugins": "^0.10.0",
     "gulp-rename": "^1.2.0",
     "gulp-replace": "^0.5.3",
+    "gulp-server-livereload": "^1.4.0",
     "interact.js": "1.2.4",
     "jquery": "1.11.3",
     "jshint-stylish": "^1.0.1",

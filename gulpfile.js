@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 
 var gulp = require('gulp');
+var server = require('gulp-server-livereload');
 
 // Load all gulp plugins automatically
 // and attach them to the `plugins` object
@@ -68,6 +69,7 @@ gulp.task('copy', [
     'copy:.htaccess',
     'copy:index.html',
     'copy:jquery',
+    'copy:interact.js',
     'copy:license',
     'copy:main.css',
     'copy:misc',
@@ -90,6 +92,12 @@ gulp.task('copy:jquery', function () {
     return gulp.src(['node_modules/jquery/dist/jquery.min.js'])
                .pipe(plugins.rename('jquery-' + pkg.devDependencies.jquery + '.min.js'))
                .pipe(gulp.dest(dirs.dist + '/js/vendor'));
+});
+
+gulp.task('copy:interact.js', function () {
+    return gulp.src(['node_modules/interact.js/interact.min.js'])
+        .pipe(plugins.rename('interact-' + pkg.devDependencies['interact.js'] + '.min.js'))
+        .pipe(gulp.dest(dirs.dist + '/js/vendor'));
 });
 
 gulp.task('copy:license', function () {
@@ -166,5 +174,22 @@ gulp.task('build', function (done) {
         'copy',
     done);
 });
+
+gulp.task('serve', function (done) {
+    runSequence(
+        'copy',
+        'webserver',
+        done);
+});
+
+gulp.task('webserver', function () {
+    gulp.src('dist')
+        .pipe(server({
+            livereload: true,
+            directoryListing: false,
+            open: false
+        }));
+});
+
 
 gulp.task('default', ['build']);
