@@ -176,10 +176,17 @@ gulp.task('build', function (done) {
     done);
 });
 
+gulp.task('watch', function() {
+    gulp.watch('src/index.html', ['copy:index.html']);
+    gulp.watch('src/css/main.css', ['copy:main.css']);
+    gulp.watch('src/js/*.js', ['copy:misc']);
+});
+
 gulp.task('serve', function (done) {
     runSequence(
         'copy',
         'webserver',
+        'watch',
         done);
 });
 
