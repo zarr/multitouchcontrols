@@ -6,11 +6,11 @@ interact('.slider')                   // target the matches of that selector
         max: Infinity                     // allow drags on multiple elements
     })
     .on('dragmove', function (event) {  // call this function on every move
-        var sliderWidth = interact.getElementRect(event.target.parentNode).width,
-            value = event.pageX / sliderWidth;
+        var sliderHeight = interact.getElementRect(event.target).height,
+            value = event.pageY / sliderHeight;
 
-        event.target.style.paddingLeft = (value * 100) + '%';
-        event.target.setAttribute('data-value', value.toFixed(2));
+        $(event.target).find('.slider_content').css('top', (value * 100) + '%');
+        event.target.setAttribute('data-value', (1 - value).toFixed(2));
     });
 
 interact.maxInteractions(Infinity);   // Allow multiple interactions

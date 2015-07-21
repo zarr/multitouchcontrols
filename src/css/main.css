@@ -275,9 +275,11 @@ textarea {
 /* the slider bar */
 .slider {
     position: relative;
-    width: 100%;
-    height: 1em;
-    margin: 1.5em auto;
+    display: inline-block;
+    width: 1.5em;
+    height: 5em;
+    margin: 0 0.5em;
+    overflow: hidden;
     background-color: #29e;
     border-radius: 0.5em;
     box-sizing: border-box;
@@ -289,31 +291,39 @@ textarea {
 }
 
 /* the slider handle */
-.slider:before {
+.slider_content {
     content: "";
-    display: block;
-    position: relative;
-    top: -0.5em;
+    /*display: block;*/
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*padding-top: 100%;*/
 
-    width: 2em;
-    height: 2em;
-    margin-left: -1em;
-    border: solid 0.25em #fff;
-    border-radius: 1em;
-    background-color: inherit;
+    /*width: 2em;*/
+    /*height: 2em;*/
+    /*margin-left: -1em;*/
+    /*border: solid 0.25em #fff;*/
+    /*border-radius: 1em;*/
+    background-color: red;
 
-    box-sizing: border-box;
+    /*border-radius: 0.5em;*/
+    /*box-sizing: border-box;*/
 }
 
 /* display the value */
 .slider:after {
     content: attr(data-value);
     position: absolute;
-    top: -1.5em;
-    width: 2em;
+    top: 50%;
+    width: 1em;
+    left: 1em;
     line-height:1em;
     margin-left: -1em;
     text-align: center;
+
+    font-size: 6vmin;
 }
 
 body { margin: 5% 10%; }
