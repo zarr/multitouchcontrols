@@ -85,6 +85,7 @@ gulp.task('copy:.htaccess', function () {
 gulp.task('copy:index.html', function () {
     return gulp.src(dirs.src + '/index.html')
                .pipe(plugins.replace(/{{JQUERY_VERSION}}/g, pkg.devDependencies.jquery))
+               .pipe(plugins.replace(/{{INTERACT_JS_VERSION}}/g, pkg.devDependencies['interact.js']))
                .pipe(gulp.dest(dirs.dist));
 });
 
@@ -185,6 +186,7 @@ gulp.task('serve', function (done) {
 gulp.task('webserver', function () {
     gulp.src('dist')
         .pipe(server({
+            host: "0.0.0.0",
             livereload: true,
             directoryListing: false,
             open: false
