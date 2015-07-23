@@ -193,7 +193,7 @@ gulp.task('serve', function (done) {
 gulp.task('webserver', function () {
     gulp.src('dist')
         .pipe(server({
-            host: "0.0.0.0",
+            host: '0.0.0.0',
             livereload: true,
             directoryListing: false,
             open: false
