@@ -354,41 +354,22 @@ body { margin: 5% 10%; }
 .group {
     display: flex;
     flex-flow: row nowrap;
-    /*justify-content: space-around;*/
 }
 
-.left-container {
-    flex-flow: column;
-}
-
-.right-container {
+.group-container {
     flex-flow: column;
 }
 
 @media all and (min-width: 460px) {
-    .left-container {
+    .group-container {
         flex: 1 50%;
+    }
+
+    .justify-left {
         justify-content: flex-start;
     }
 
-    .right-container {
-        flex: 1 50%;
-        justify-content: flex-end;
-    }
-
-    .group1 {
-        justify-content: flex-start;
-    }
-
-    .group2 {
-        justify-content: flex-end;
-    }
-
-    .group3 {
-        justify-content: flex-start;
-    }
-
-    .group4 {
+    .justify-right {
         justify-content: flex-end;
     }
 }

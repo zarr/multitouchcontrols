@@ -55,13 +55,13 @@ function addControl(container, template, parameter) {
 }
 
 var mainContainer = $('.container');
-var leftGroup = $('<div class="container left-container"></div>');
-var rightGroup = $('<div class="container right-container"></div>');
+var leftGroup = $('<div class="container group-container justify-left"></div>');
+var rightGroup = $('<div class="container group-container justify-right"></div>');
 
-var group1 = $('<div class="group group1"></div>');
-var group2 = $('<div class="group group2"></div>');
-var group3 = $('<div class="group group3"></div>');
-var group4 = $('<div class="group group4"></div>');
+var group1 = $('<div class="group justify-left"></div>');
+var group2 = $('<div class="group justify-right"></div>');
+var group3 = $('<div class="group justify-left"></div>');
+var group4 = $('<div class="group justify-right"></div>');
 
 mainContainer
     .append(leftGroup)
