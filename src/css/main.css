@@ -272,6 +272,23 @@ textarea {
 }
 
 
+.button {
+    position: relative;
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    margin: 0.5em 0.5em;
+    overflow: hidden;
+    background-color: #29e;
+    border-radius: 0.5em;
+    box-sizing: border-box;
+
+    font-size: 8vmin;
+
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
 /* the slider bar */
 .slider {
     position: relative;
