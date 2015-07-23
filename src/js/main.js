@@ -50,22 +50,43 @@ var sliderTemplate = '<div class="slider"><div class="slider_content"></div></di
 var momentaryTemplate = '<div class="momentary button"></div>';
 var toggleTemplate = '<div class="toggle button"></div>;'
 
-function addControl(template, parameter) {
-    $('.container').append($(template).data('parameter', parameter));
+function addControl(container, template, parameter) {
+    container.append($(template).data('parameter', parameter));
 }
 
-addControl(sliderTemplate, '/ch/02/mix/01/level');
-addControl(sliderTemplate, '/ch/03/mix/01/level');
-addControl(sliderTemplate, '/ch/10/mix/01/level');
-addControl(sliderTemplate, '/ch/17/mix/01/level');
+var mainContainer = $('.container');
+var leftGroup = $('<div class="container left-container"></div>');
+var rightGroup = $('<div class="container right-container"></div>');
 
-addControl(momentaryTemplate, 'ch11 mix');
-addControl(toggleTemplate, 'ch1 mix');
+var group1 = $('<div class="group group1"></div>');
+var group2 = $('<div class="group group2"></div>');
+var group3 = $('<div class="group group3"></div>');
+var group4 = $('<div class="group group4"></div>');
 
-addControl(momentaryTemplate, 'ch12 mix');
-addControl(toggleTemplate, 'ch2 mix');
+mainContainer
+    .append(leftGroup)
+    .append(rightGroup);
 
-addControl(sliderTemplate, '/ch/01/mix/02/level');
-addControl(sliderTemplate, '/ch/03/mix/02/level');
-addControl(sliderTemplate, '/ch/10/mix/02/level');
-addControl(sliderTemplate, '/ch/17/mix/02/level');
+leftGroup
+    .append(group1)
+    .append(group3);
+rightGroup
+    .append(group2)
+    .append(group4);
+
+
+addControl(group1, momentaryTemplate, 'ch11 mix');
+addControl(group1, toggleTemplate, 'ch1 mix');
+
+addControl(group2, momentaryTemplate, 'ch12 mix');
+addControl(group2, toggleTemplate, 'ch2 mix');
+
+addControl(group3, sliderTemplate, '/ch/02/mix/01/level');
+addControl(group3, sliderTemplate, '/ch/03/mix/01/level');
+addControl(group3, sliderTemplate, '/ch/10/mix/01/level');
+addControl(group3, sliderTemplate, '/ch/17/mix/01/level');
+
+addControl(group4, sliderTemplate, '/ch/01/mix/02/level');
+addControl(group4, sliderTemplate, '/ch/03/mix/02/level');
+addControl(group4, sliderTemplate, '/ch/10/mix/02/level');
+addControl(group4, sliderTemplate, '/ch/17/mix/02/level');
