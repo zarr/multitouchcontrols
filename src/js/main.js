@@ -64,3 +64,8 @@ addControl(toggleTemplate, 'ch1 mix');
 
 addControl(momentaryTemplate, 'ch12 mix');
 addControl(toggleTemplate, 'ch2 mix');
+
+addControl(sliderTemplate, '/ch/01/mix/02/level');
+addControl(sliderTemplate, '/ch/03/mix/02/level');
+addControl(sliderTemplate, '/ch/10/mix/02/level');
+addControl(sliderTemplate, '/ch/17/mix/02/level');
