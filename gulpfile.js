@@ -96,8 +96,8 @@ gulp.task('copy:jquery', function () {
 });
 
 gulp.task('copy:interact.js', function () {
-    return gulp.src(['node_modules/interact.js/interact.min.js'])
-        .pipe(plugins.rename('interact-' + pkg.devDependencies['interact.js'] + '.min.js'))
+    return gulp.src(['node_modules/interact.js/interact.js'])
+        .pipe(plugins.rename('interact-' + pkg.devDependencies['interact.js'] + '.js'))
         .pipe(gulp.dest(dirs.dist + '/js/vendor'));
 });
 
