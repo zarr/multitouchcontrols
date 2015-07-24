@@ -277,7 +277,7 @@ textarea {
     display: inline-block;
     width: 3em;
     height: 3em;
-    margin: 0.5em 0.5em;
+    margin: 0 0.5em;
     overflow: hidden;
     background-color: #29e;
     border-radius: 0.5em;
@@ -358,6 +358,10 @@ body { margin: 5% 10%; }
 
 .group-container {
     flex-flow: column;
+}
+
+.control-name {
+    text-align: center;
 }
 
 @media all and (min-width: 460px) {

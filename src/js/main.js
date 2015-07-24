@@ -46,12 +46,16 @@ function sendMessage(message) {
 
 interact.maxInteractions(Infinity);   // Allow multiple interactions
 
+var controlWrapperTemplate = '<div class="control-wrapper"><div class="control-name"></div></div>';
 var sliderTemplate = '<div class="slider"><div class="slider_content"></div></div>';
 var momentaryTemplate = '<div class="momentary button"></div>';
 var toggleTemplate = '<div class="toggle button"></div>;'
 
-function addControl(container, template, parameter) {
-    container.append($(template).data('parameter', parameter));
+function addControl(container, template, name, parameter) {
+    var control = $(template).data('parameter', parameter);
+    var wrapped = $(controlWrapperTemplate).prepend(control);
+    wrapped.find('.control-name').text(name);
+    container.append(wrapped);
 }
 
 var mainContainer = $('.container');
@@ -75,18 +79,18 @@ rightGroup
     .append(group4);
 
 
-addControl(group1, momentaryTemplate, 'ch11 mix');
-addControl(group1, toggleTemplate, 'ch1 mix');
+addControl(group1, momentaryTemplate, 'intercom', 'ch11 mix');
+addControl(group1, toggleTemplate, 'on air', 'ch1 mix');
 
-addControl(group2, momentaryTemplate, 'ch12 mix');
-addControl(group2, toggleTemplate, 'ch2 mix');
+addControl(group2, momentaryTemplate, 'intercom', 'ch12 mix');
+addControl(group2, toggleTemplate, 'on air', 'ch2 mix');
 
-addControl(group3, sliderTemplate, '/ch/02/mix/01/level');
-addControl(group3, sliderTemplate, '/ch/03/mix/01/level');
-addControl(group3, sliderTemplate, '/ch/10/mix/01/level');
-addControl(group3, sliderTemplate, '/ch/17/mix/01/level');
+addControl(group3, sliderTemplate, 'caster 2', '/ch/02/mix/01/level');
+addControl(group3, sliderTemplate, 'game', '/ch/03/mix/01/level');
+addControl(group3, sliderTemplate, 'program', '/ch/10/mix/01/level');
+addControl(group3, sliderTemplate, 'talkback', '/ch/17/mix/01/level');
 
-addControl(group4, sliderTemplate, '/ch/01/mix/02/level');
-addControl(group4, sliderTemplate, '/ch/03/mix/02/level');
-addControl(group4, sliderTemplate, '/ch/10/mix/02/level');
-addControl(group4, sliderTemplate, '/ch/17/mix/02/level');
+addControl(group4, sliderTemplate, 'caster 1', '/ch/01/mix/02/level');
+addControl(group4, sliderTemplate, 'game', '/ch/03/mix/02/level');
+addControl(group4, sliderTemplate, 'program', '/ch/10/mix/02/level');
+addControl(group4, sliderTemplate, 'talkback', '/ch/17/mix/02/level');
