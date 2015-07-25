@@ -46,6 +46,9 @@ function sendMessage(message) {
 
 interact.maxInteractions(Infinity);   // Allow multiple interactions
 
+
+var events = $({});
+
 var controlWrapperTemplate = '<div class="control-wrapper"><div class="control-name"></div></div>';
 var sliderTemplate = '<div class="slider"><div class="slider_content"></div></div>';
 var momentaryTemplate = '<div class="momentary button"></div>';
@@ -56,6 +59,11 @@ function addControl(container, template, name, parameter) {
     var wrapped = $(controlWrapperTemplate).prepend(control);
     wrapped.find('.control-name').text(name);
     container.append(wrapped);
+
+    console.log('registering handler for', parameter);
+    events.on(parameter, function (event, value) {
+        console.log('received value', value, 'for parameter', parameter);
+    });
 }
 
 var mainContainer = $('.container');
@@ -94,3 +102,9 @@ addControl(group4, sliderTemplate, 'caster 1', '/ch/01/mix/02/level');
 addControl(group4, sliderTemplate, 'game', '/ch/03/mix/02/level');
 addControl(group4, sliderTemplate, 'program', '/ch/10/mix/02/level');
 addControl(group4, sliderTemplate, 'talkback', '/ch/17/mix/02/level');
+
+
+window.setTimeout(function () {
+    console.log('triggering handler');
+    events.triggerHandler('/ch/02/mix/01/level', '0.5');
+}, 5000)
