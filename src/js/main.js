@@ -56,28 +56,16 @@ function addControl(container, elementBuilder, name, parameter) {
 }
 
 var momentaryControl = function(parameter) {
-    var element = $(momentaryTemplate).data('parameter', parameter);
-    var handleValue = function (element, value, skipSend) {
-        element.attr('data-value', value);
-        if (value === 'ON') {
-            element.css('background', 'red');
-        } else if (value === 'OFF') {
-            element.css('background', '#29e');
-        }
+    return buttonControl(momentaryTemplate, parameter);
 
-        if (!skipSend) sendMessage(element.data('parameter') + ' ' + value);
-
-    };
-    events.on(parameter, function (event, value) {
-        console.log('received value', value, 'for parameter', parameter);
-        handleValue(element, value);
-    });
-    element.data('handler', handleValue);
-    return element;
 };
 
 var toggleControl = function(parameter) {
-    var element = $(toggleTemplate).data('parameter', parameter);
+    return buttonControl(toggleTemplate, parameter);
+};
+
+var buttonControl = function(template, parameter) {
+    var element = $(template);
     var handleValue = function (element, value, skipSend) {
         element.attr('data-value', value);
         if (value === 'ON') {
@@ -86,7 +74,8 @@ var toggleControl = function(parameter) {
             element.css('background', '#29e');
         }
 
-        if (!skipSend) sendMessage(element.data('parameter') + ' ' + value);
+        if (!skipSend) sendMessage(parameter + ' ' + value);
+
     };
     events.on(parameter, function (event, value) {
         console.log('received value', value, 'for parameter', parameter);
@@ -97,14 +86,14 @@ var toggleControl = function(parameter) {
 };
 
 var sliderControl = function(parameter) {
-    var element = $(sliderTemplate).data('parameter', parameter);
+    var element = $(sliderTemplate);
     var content = element.find('.slider_content');
     var handleValue = function (element, value, skipSend) {
         element.attr('data-value', value);
         content.css('top', (value * 100) + '%');
         element.attr('data-value', (1 - value).toFixed(2));
 
-        if (!skipSend) sendMessage(element.data('parameter') + ' ' + (1 - value).toFixed(2));
+        if (!skipSend) sendMessage(parameter + ' ' + (1 - value).toFixed(2));
     };
     events.on(parameter, function (event, value) {
         console.log('received value', value, 'for parameter', parameter);
