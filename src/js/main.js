@@ -135,11 +135,11 @@ rightGroup
     .append(group4);
 
 
-addControl(group1, momentaryControl, 'intercom', '/ch/11/mix');
-addControl(group1, toggleControl, 'on air', '/ch/01/mix');
+addControl(group1, momentaryControl, 'intercom', '/ch/11/mix/on');
+addControl(group1, toggleControl, 'on air', '/ch/01/mix/on');
 
-addControl(group2, momentaryControl, 'intercom', '/ch/12/mix');
-addControl(group2, toggleControl, 'on air', '/ch/02/mix');
+addControl(group2, momentaryControl, 'intercom', '/ch/12/mix/on');
+addControl(group2, toggleControl, 'on air', '/ch/02/mix/on');
 
 addControl(group3, sliderControl, 'caster 2', '/ch/02/mix/01/level');
 addControl(group3, sliderControl, 'game', '/ch/03/mix/01/level');
@@ -155,5 +155,5 @@ addControl(group4, sliderControl, 'talkback', '/ch/17/mix/02/level');
 window.setTimeout(function () {
     console.log('triggering handlers');
     triggerMessage('/ch/02/mix/01/level 0.5');
-    triggerMessage('/ch/01/mix ON');
+    triggerMessage('/ch/01/mix/on ON');
 }, 5000)
