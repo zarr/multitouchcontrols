@@ -10,38 +10,32 @@ interact('.slider')                   // target the matches of that selector
         var sliderHeight = interact.getElementRect(event.target).height;
         var value = event.pageY / sliderHeight;
 
-        $(event.target).find('.slider_content').css('top', (value * 100) + '%');
-        event.target.setAttribute('data-value', (1 - value).toFixed(2));
-
-        sendMessage($(event.target).data('parameter') + ' ' + (1 - value).toFixed(2))
+        $(event.target).data('handler')($(event.target), value);
     });
 
 interact('.toggle')
     .on('tap', function (event) {
         var isSet = ('ON' == event.target.getAttribute('data-value'));
-        event.target.setAttribute('data-value', isSet ? 'OFF' : 'ON');
-        event.target.style.background = isSet ? '#29e' : 'red';
-
-        sendMessage($(event.target).data('parameter') + ' ' + (isSet ? 'OFF' : 'ON'));
+        $(event.target).data('handler')($(event.target), isSet ? 'OFF' : 'ON');
     })
 ;
 
 interact('.momentary')
     .on('down', function (event) {
-        event.target.setAttribute('data-value', 'ON');
-        event.target.style.background = 'red';
-        sendMessage($(event.target).data('parameter') + ' ON');
+        $(event.target).data('handler')($(event.target), 'ON');
     })
     .on('up', function (event) {
-        event.target.setAttribute('data-value', 'OFF');
-        event.target.style.background = '#29e';
-        sendMessage($(event.target).data('parameter') + ' OFF');
+        $(event.target).data('handler')($(event.target), 'OFF');
     })
 ;
 
 function sendMessage(message) {
-    console.log(message);
     $('.log').text(message);
+}
+
+function triggerMessage(message) {
+    var splitMessage = message.split(' ');
+    events.triggerHandler(splitMessage.shift(), splitMessage.join(' '));
 }
 
 interact.maxInteractions(Infinity);   // Allow multiple interactions
@@ -54,17 +48,71 @@ var sliderTemplate = '<div class="slider"><div class="slider_content"></div></di
 var momentaryTemplate = '<div class="momentary button"></div>';
 var toggleTemplate = '<div class="toggle button"></div>;'
 
-function addControl(container, template, name, parameter) {
-    var control = $(template).data('parameter', parameter);
+function addControl(container, elementBuilder, name, parameter) {
+    var control = elementBuilder(parameter);
     var wrapped = $(controlWrapperTemplate).prepend(control);
     wrapped.find('.control-name').text(name);
     container.append(wrapped);
+}
 
-    console.log('registering handler for', parameter);
+var momentaryControl = function(parameter) {
+    var element = $(momentaryTemplate).data('parameter', parameter);
+    var handleValue = function (element, value, skipSend) {
+        element.attr('data-value', value);
+        if (value === 'ON') {
+            element.css('background', 'red');
+        } else if (value === 'OFF') {
+            element.css('background', '#29e');
+        }
+
+        if (!skipSend) sendMessage(element.data('parameter') + ' ' + value);
+
+    };
     events.on(parameter, function (event, value) {
         console.log('received value', value, 'for parameter', parameter);
+        handleValue(element, value);
     });
-}
+    element.data('handler', handleValue);
+    return element;
+};
+
+var toggleControl = function(parameter) {
+    var element = $(toggleTemplate).data('parameter', parameter);
+    var handleValue = function (element, value, skipSend) {
+        element.attr('data-value', value);
+        if (value === 'ON') {
+            element.css('background', 'red');
+        } else if (value === 'OFF') {
+            element.css('background', '#29e');
+        }
+
+        if (!skipSend) sendMessage(element.data('parameter') + ' ' + value);
+    };
+    events.on(parameter, function (event, value) {
+        console.log('received value', value, 'for parameter', parameter);
+        handleValue(element, value);
+    });
+    element.data('handler', handleValue);
+    return element;
+};
+
+var sliderControl = function(parameter) {
+    var element = $(sliderTemplate).data('parameter', parameter);
+    var content = element.find('.slider_content');
+    var handleValue = function (element, value, skipSend) {
+        element.attr('data-value', value);
+        content.css('top', (value * 100) + '%');
+        element.attr('data-value', (1 - value).toFixed(2));
+
+        if (!skipSend) sendMessage(element.data('parameter') + ' ' + (1 - value).toFixed(2));
+    };
+    events.on(parameter, function (event, value) {
+        console.log('received value', value, 'for parameter', parameter);
+        handleValue(element, value, true);
+    });
+    element.data('handler', handleValue);
+    return element;
+};
 
 var mainContainer = $('.container');
 var leftGroup = $('<div class="container group-container justify-left"></div>');
@@ -87,24 +135,25 @@ rightGroup
     .append(group4);
 
 
-addControl(group1, momentaryTemplate, 'intercom', 'ch11 mix');
-addControl(group1, toggleTemplate, 'on air', 'ch1 mix');
+addControl(group1, momentaryControl, 'intercom', '/ch/11/mix');
+addControl(group1, toggleControl, 'on air', '/ch/01/mix');
 
-addControl(group2, momentaryTemplate, 'intercom', 'ch12 mix');
-addControl(group2, toggleTemplate, 'on air', 'ch2 mix');
+addControl(group2, momentaryControl, 'intercom', '/ch/12/mix');
+addControl(group2, toggleControl, 'on air', '/ch/02/mix');
 
-addControl(group3, sliderTemplate, 'caster 2', '/ch/02/mix/01/level');
-addControl(group3, sliderTemplate, 'game', '/ch/03/mix/01/level');
-addControl(group3, sliderTemplate, 'program', '/ch/10/mix/01/level');
-addControl(group3, sliderTemplate, 'talkback', '/ch/17/mix/01/level');
+addControl(group3, sliderControl, 'caster 2', '/ch/02/mix/01/level');
+addControl(group3, sliderControl, 'game', '/ch/03/mix/01/level');
+addControl(group3, sliderControl, 'program', '/ch/10/mix/01/level');
+addControl(group3, sliderControl, 'talkback', '/ch/17/mix/01/level');
 
-addControl(group4, sliderTemplate, 'caster 1', '/ch/01/mix/02/level');
-addControl(group4, sliderTemplate, 'game', '/ch/03/mix/02/level');
-addControl(group4, sliderTemplate, 'program', '/ch/10/mix/02/level');
-addControl(group4, sliderTemplate, 'talkback', '/ch/17/mix/02/level');
+addControl(group4, sliderControl, 'caster 1', '/ch/01/mix/02/level');
+addControl(group4, sliderControl, 'game', '/ch/03/mix/02/level');
+addControl(group4, sliderControl, 'program', '/ch/10/mix/02/level');
+addControl(group4, sliderControl, 'talkback', '/ch/17/mix/02/level');
 
 
 window.setTimeout(function () {
-    console.log('triggering handler');
-    events.triggerHandler('/ch/02/mix/01/level', '0.5');
+    console.log('triggering handlers');
+    triggerMessage('/ch/02/mix/01/level 0.5');
+    triggerMessage('/ch/01/mix ON');
 }, 5000)
