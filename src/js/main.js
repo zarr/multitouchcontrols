@@ -1,4 +1,33 @@
 $(function () {
+
+    var socket;
+    function initSocket() {
+        // connect to local osc bridge
+        socket = io.connect('http://127.0.0.1', { port: 8081, rememberTransport: false});
+        socket.on('connect', function() {
+            // sends to socket.io server the host/port of oscServer
+            // and oscClient
+            socket.emit('config',
+                {
+                    //vastaanotto proxylta
+                    server: {
+                        port: 3333,
+                        host: '127.0.0.1'
+                    },
+                    //lahetys eli mikserin ip
+                    client: {
+                        port: 10023,
+                        host: '127.0.0.1'
+                    }
+                }
+            );
+        });
+        socket.on('message', function(obj) {
+            triggerMessage(obj[0]);
+        });
+    }
+    initSocket();
+
     interact('.slider')                   // target the matches of that selector
         .origin('self')                     // (0, 0) will be the element's top-left
         .draggable({                        // make the element fire drag events
@@ -32,6 +61,7 @@ $(function () {
 
     function sendMessage(message) {
         $('.log').text(message);
+        socket.emit('message', message);
     }
 
     function triggerMessage(message) {
