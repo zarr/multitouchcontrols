@@ -23,7 +23,8 @@ $(function () {
             );
         });
         socket.on('message', function(obj) {
-            triggerMessage(obj[0]);
+            console.log('got message', obj);
+            triggerMessage(obj[0], obj[1]);
         });
     }
     initSocket();
@@ -40,33 +41,36 @@ $(function () {
             var sliderHeight = interact.getElementRect(event.target).height;
             var value = event.pageY / sliderHeight;
 
-            $(event.target).data('handler')($(event.target), value);
+            $(event.target).data('handler')($(event.target), (1 - value));
         });
 
     interact('.toggle')
         .on('tap', function (event) {
-            var isSet = ('ON' == event.target.getAttribute('data-value'));
-            $(event.target).data('handler')($(event.target), isSet ? 'OFF' : 'ON');
+            var isSet = (1 == event.target.getAttribute('data-value'));
+            $(event.target).data('handler')($(event.target), isSet ? 0 : 1);
         })
     ;
 
     interact('.momentary')
         .on('down', function (event) {
-            $(event.target).data('handler')($(event.target), 'ON');
+            $(event.target).data('handler')($(event.target), 1);
         })
         .on('up', function (event) {
-            $(event.target).data('handler')($(event.target), 'OFF');
+            $(event.target).data('handler')($(event.target), 0);
         })
     ;
 
-    function sendMessage(message) {
-        $('.log').text(message);
+    function sendMessage(parameter, value, type) {
+        type = type || 'f'
+        var message = {address: parameter, args: [{type: type, value: value}]};
+        $('.log').text(parameter + ' ' + value);
         socket.emit('message', message);
     }
 
-    function triggerMessage(message) {
-        var splitMessage = message.split(' ');
-        events.triggerHandler(splitMessage.shift(), splitMessage.join(' '));
+    function triggerMessage(parameter, value) {
+        console.log('triggering message', parameter, value);
+        $('.log').text(parameter + ' ' + value);
+        events.triggerHandler(parameter, value);
     }
 
     interact.maxInteractions(Infinity);   // Allow multiple interactions
@@ -99,18 +103,18 @@ $(function () {
         var element = $(template);
         var handleValue = function (element, value, skipSend) {
             element.attr('data-value', value);
-            if (value === 'ON') {
+            if (value === 1) {
                 element.css('background', 'red');
-            } else if (value === 'OFF') {
+            } else if (value === 0) {
                 element.css('background', '#29e');
             }
 
-            if (!skipSend) sendMessage(parameter + ' ' + value);
+            if (!skipSend) sendMessage(parameter, value, 'i');
 
         };
         events.on(parameter, function (event, value) {
             console.log('received value', value, 'for parameter', parameter);
-            handleValue(element, value);
+            handleValue(element, value, true);
         });
         element.data('handler', handleValue);
         return element;
@@ -121,10 +125,9 @@ $(function () {
         var content = element.find('.slider_content');
         var handleValue = function (element, value, skipSend) {
             element.attr('data-value', value);
-            content.css('top', (value * 100) + '%');
-            element.attr('data-value', (1 - value).toFixed(2));
+            content.css('top', ((1 - value) * 100) + '%');
 
-            if (!skipSend) sendMessage(parameter + ' ' + (1 - value).toFixed(2));
+            if (!skipSend) sendMessage(parameter, value, 'f');
         };
         events.on(parameter, function (event, value) {
             console.log('received value', value, 'for parameter', parameter);
@@ -174,7 +177,7 @@ $(function () {
 
     window.setTimeout(function () {
         console.log('triggering handlers');
-        triggerMessage('/ch/02/mix/01/level 0.5');
-        triggerMessage('/ch/01/mix/on ON');
+        triggerMessage('/ch/02/mix/01/level', 0.5);
+        triggerMessage('/ch/01/mix/on', 1);
     }, 5000);
 });
