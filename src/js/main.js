@@ -61,7 +61,7 @@ $(function () {
     ;
 
     function sendMessage(parameter, value, type) {
-        type = type || 'f'
+        type = type || 'float';
         var message = {address: parameter, args: [{type: type, value: value}]};
         $('.log').text(parameter + ' ' + value);
         socket.emit('message', message);
@@ -109,7 +109,7 @@ $(function () {
                 element.css('background', '#29e');
             }
 
-            if (!skipSend) sendMessage(parameter, value, 'i');
+            if (!skipSend) sendMessage(parameter, value, 'integer');
 
         };
         events.on(parameter, function (event, value) {
@@ -127,7 +127,7 @@ $(function () {
             element.attr('data-value', value);
             content.css('top', ((1 - value) * 100) + '%');
 
-            if (!skipSend) sendMessage(parameter, value, 'f');
+            if (!skipSend) sendMessage(parameter, value, 'float');
         };
         events.on(parameter, function (event, value) {
             console.log('received value', value, 'for parameter', parameter);
