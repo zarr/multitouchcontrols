@@ -100,6 +100,11 @@ $(function () {
     };
 
     var buttonControl = function(template, parameter) {
+        if ($.type(parameter) === 'string') {
+            parameter = {
+                on: [parameter]
+            };
+        }
         var element = $(template);
         var handleValue = function (element, value, skipSend) {
             element.attr('data-value', value);
@@ -111,11 +116,23 @@ $(function () {
                 element.removeClass('button-on');
             }
 
-            if (!skipSend) sendMessage(parameter, value, 'integer');
+            var param;
+            if (!skipSend) {
+                $.each(parameter.on, function (idx) {
+                    param = parameter.on[idx];
+                    console.log('sending', param, value);
+                    sendMessage(param, value, 'integer');
+                });
+                if (parameter.off !== undefined) $.each(parameter.off, function (idx) {
+                    param = parameter.off[idx];
+                    sendMessage(param, value === 1 ? 0 : 1, 'integer');
+                });
+            }
 
         };
-        events.on(parameter, function (event, value) {
-            console.log('received value', value, 'for parameter', parameter);
+        var primaryParameter = parameter.on[0];
+        events.on(primaryParameter, function (event, value) {
+            console.log('received value', value, 'for parameter', primaryParameter);
             handleValue(element, value, true);
         });
         element.data('handler', handleValue);
@@ -160,10 +177,10 @@ $(function () {
         .append(group4);
 
 
-    addControl(group1, momentaryControl, 'intercom', '/ch/11/mix/on');
+    addControl(group1, momentaryControl, 'intercom', {on: ['/ch/11/mix/on'], off: ['/ch/01/mix/on']});
     addControl(group1, toggleControl, 'on air', '/ch/01/mix/on');
 
-    addControl(group2, momentaryControl, 'intercom', '/ch/12/mix/on');
+    addControl(group2, momentaryControl, 'intercom', {on: ['/ch/12/mix/on'], off: ['/ch/02/mix/on']});
     addControl(group2, toggleControl, 'on air', '/ch/02/mix/on');
 
     addControl(group3, sliderControl, 'caster 2', '/ch/02/mix/01/level');
