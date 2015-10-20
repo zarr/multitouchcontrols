@@ -80,8 +80,8 @@ $(function () {
 
     var controlWrapperTemplate = '<div class="control-wrapper"><div class="control-name"></div></div>';
     var sliderTemplate = '<div class="slider"><div class="slider_content"></div></div>';
-    var momentaryTemplate = '<div class="momentary button"></div>';
-    var toggleTemplate = '<div class="toggle button"></div>;'
+    var momentaryTemplate = '<div class="momentary button button-off"></div>';
+    var toggleTemplate = '<div class="toggle button button-off"></div>;'
 
     function addControl(container, elementBuilder, name, parameter) {
         var control = elementBuilder(parameter);
@@ -104,9 +104,11 @@ $(function () {
         var handleValue = function (element, value, skipSend) {
             element.attr('data-value', value);
             if (value === 1) {
-                element.css('background', 'red');
+                element.addClass('button-on');
+                element.removeClass('button-off');
             } else if (value === 0) {
-                element.css('background', '#29e');
+                element.addClass('button-off');
+                element.removeClass('button-on');
             }
 
             if (!skipSend) sendMessage(parameter, value, 'integer');

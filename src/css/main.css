@@ -287,6 +287,9 @@ textarea {
 
     -ms-touch-action: none;
     touch-action: none;
+
+    text-align: center;
+    line-height: 3em;
 }
 
 /* the slider bar */
@@ -376,4 +379,22 @@ body { margin: 5% 10%; }
     .justify-right {
         justify-content: flex-end;
     }
+}
+
+.button-on {
+    background: red;
+    color: #aaa;
+}
+
+.button-on:after {
+    content: 'ON';
+}
+
+.button-off {
+    background: #29e;
+    color: #4bf;
+}
+
+.button-off:after {
+    content: 'MUTE';
 }
