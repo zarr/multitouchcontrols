@@ -1,10 +1,12 @@
 $(function () {
-
+    addLog('loading main.js');
     var socket;
     function initSocket() {
+        addLog('initializing connection');
         // connect to local osc bridge
         socket = io.connect('http://127.0.0.1', { port: 8081, rememberTransport: false});
         socket.on('connect', function() {
+            addLog('connected!');
             // sends to socket.io server the host/port of oscServer
             // and oscClient
             socket.emit('config',
@@ -60,16 +62,20 @@ $(function () {
         })
     ;
 
+    function addLog(text) {
+        $('.log').prepend($('<div>' + text + '</div>'));
+    }
+
     function sendMessage(parameter, value, type) {
         type = type || 'float';
         var message = {address: parameter, args: [{type: type, value: value}]};
-        $('.log').prepend($('<div>' + parameter + ' ' + value + '</div>'));
+        addLog(parameter + ' ' + value);
         socket.emit('message', message);
     }
 
     function triggerMessage(parameter, value) {
         console.log('triggering message', parameter, value);
-        $('.log').prepend($('<div>' + parameter + ' ' + value + '</div>'));
+        addLog(parameter + ' ' + value);
         events.triggerHandler(parameter, value);
     }
 
