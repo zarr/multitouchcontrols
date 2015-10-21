@@ -63,13 +63,13 @@ $(function () {
     function sendMessage(parameter, value, type) {
         type = type || 'float';
         var message = {address: parameter, args: [{type: type, value: value}]};
-        $('.log').text(parameter + ' ' + value);
+        $('.log').prepend($('<div>' + parameter + ' ' + value + '</div>'));
         socket.emit('message', message);
     }
 
     function triggerMessage(parameter, value) {
         console.log('triggering message', parameter, value);
-        $('.log').text(parameter + ' ' + value);
+        $('.log').prepend($('<div>' + parameter + ' ' + value + '</div>'));
         events.triggerHandler(parameter, value);
     }
 

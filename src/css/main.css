@@ -367,6 +367,12 @@ body { margin: 5% 10%; }
     text-align: center;
 }
 
+.log {
+    height: 4em;
+    overflow: auto;
+    background-color: #ddd;
+}
+
 @media all and (min-width: 460px) {
     .group-container {
         flex: 1 50%;
