@@ -182,10 +182,4 @@ $(function () {
     addControl(group4, sliderControl, 'program', '/ch/10/mix/02/level');
     addControl(group4, sliderControl, 'talkback', '/ch/17/mix/02/level');
 
-
-    window.setTimeout(function () {
-        console.log('triggering handlers');
-        triggerMessage('/ch/02/mix/01/level', 0.5);
-        triggerMessage('/ch/01/mix/on', 1);
-    }, 5000);
 });
