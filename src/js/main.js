@@ -68,8 +68,13 @@ $(function () {
 
     function sendMessage(parameter, value, type) {
         type = type || 'float';
-        var message = {address: parameter, args: [{type: type, value: value}]};
-        addLog(parameter + ' ' + value);
+        var message;
+        if (value) {
+            message = {address: parameter, args: [{type: type, value: value}]};
+        } else {
+            message = {address: parameter};
+        }
+        addLog(parameter + ' ' + (value ? value : ''));
         socket.emit('message', message);
     }
 
@@ -87,7 +92,7 @@ $(function () {
     var controlWrapperTemplate = '<div class="control-wrapper"><div class="control-name"></div></div>';
     var sliderTemplate = '<div class="slider"><div class="slider_content"></div></div>';
     var momentaryTemplate = '<div class="momentary button button-off"></div>';
-    var toggleTemplate = '<div class="toggle button button-off"></div>;'
+    var toggleTemplate = '<div class="toggle button button-off"></div>';
 
     function addControl(container, elementBuilder, name, parameter) {
         var control = elementBuilder(parameter);
@@ -125,6 +130,7 @@ $(function () {
             handleValue(element, value, true);
         });
         element.data('handler', handleValue);
+        sendMessage(parameter);
         return element;
     };
 
@@ -142,6 +148,7 @@ $(function () {
             handleValue(element, value, true);
         });
         element.data('handler', handleValue);
+        sendMessage(parameter);
         return element;
     };
 
