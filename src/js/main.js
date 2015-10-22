@@ -192,22 +192,22 @@ $(function () {
         .append(group4);
 
 
-    addControl(group1, momentaryControl, 'intercom', '/ch/19/mix/on');
-    addControl(group1, toggleControl, 'on air', '/ch/01/mix/on');
+    addControl(group1, momentaryControl, 'intercom', '/ch/20/mix/on');
+    addControl(group1, toggleControl, 'on air', '/ch/02/mix/on');
 
-    addControl(group2, momentaryControl, 'intercom', '/ch/20/mix/on');
-    addControl(group2, toggleControl, 'on air', '/ch/02/mix/on');
+    addControl(group2, momentaryControl, 'intercom', '/ch/19/mix/on');
+    addControl(group2, toggleControl, 'on air', '/ch/01/mix/on');
 
-    addControl(group3, sliderControl, 'caster 1', '/ch/01/mix/01/level');
-    addControl(group3, sliderControl, 'caster 2', '/ch/02/mix/01/level');
-    addControl(group3, sliderControl, 'caster 3', '/ch/03/mix/01/level');
-    addControl(group3, sliderControl, 'game', '/ch/05/mix/01/level');
-    addControl(group3, sliderControl, 'talkback', '/ch/17/mix/01/level');
+    addControl(group3, sliderControl, 'caster 1', '/ch/01/mix/02/level');
+    addControl(group3, sliderControl, 'caster 2', '/ch/02/mix/02/level');
+    addControl(group3, sliderControl, 'caster 3', '/ch/03/mix/02/level');
+    addControl(group3, sliderControl, 'game', '/ch/05/mix/02/level');
+    addControl(group3, sliderControl, 'talkback', '/ch/17/mix/02/level');
 
-    addControl(group4, sliderControl, 'caster 1', '/ch/01/mix/02/level');
-    addControl(group4, sliderControl, 'caster 2', '/ch/02/mix/02/level');
-    addControl(group4, sliderControl, 'caster 3', '/ch/03/mix/02/level');
-    addControl(group4, sliderControl, 'game', '/ch/05/mix/02/level');
-    addControl(group4, sliderControl, 'talkback', '/ch/17/mix/02/level');
+    addControl(group4, sliderControl, 'caster 1', '/ch/01/mix/01/level');
+    addControl(group4, sliderControl, 'caster 2', '/ch/02/mix/01/level');
+    addControl(group4, sliderControl, 'caster 3', '/ch/03/mix/01/level');
+    addControl(group4, sliderControl, 'game', '/ch/05/mix/01/level');
+    addControl(group4, sliderControl, 'talkback', '/ch/17/mix/01/level');
 
 });
