@@ -149,7 +149,6 @@ $(function () {
         var toRange = toMax - toMin;
         var fromRange = fromMax - fromMin;
         var zeroToOne = (value - fromMin) / fromRange;
-        console.log('toRange', toRange, 'zeroToOne', zeroToOne);
         return ((zeroToOne * toRange) + toMin).toFixed(1);
     }
 
