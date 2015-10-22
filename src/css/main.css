@@ -290,13 +290,15 @@ textarea {
 
     text-align: center;
     line-height: 3em;
+
+    -webkit-user-select: none;
 }
 
 /* the slider bar */
 .slider {
     position: relative;
     display: inline-block;
-    width: 1.5em;
+    width: 1em;
     height: 5em;
     margin: 0 0.5em;
     overflow: hidden;
@@ -337,13 +339,13 @@ textarea {
     content: attr(data-value);
     position: absolute;
     top: 50%;
-    width: 1em;
+    width: 2em;
     left: 1em;
     line-height:1em;
     margin-left: -1em;
     text-align: center;
 
-    font-size: 6vmin;
+    font-size: 3vmin;
 }
 
 body { margin: 5% 10%; }

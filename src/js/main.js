@@ -132,7 +132,7 @@ $(function () {
         var element = $(sliderTemplate);
         var content = element.find('.slider_content');
         var handleValue = function (element, value, skipSend) {
-            element.attr('data-value', value);
+            element.attr('data-value', mapFloatToDecibel(value));
             content.css('top', ((1 - value) * 100) + '%');
 
             if (!skipSend) sendMessage(parameter, value, 'float');
@@ -144,6 +144,33 @@ $(function () {
         element.data('handler', handleValue);
         return element;
     };
+
+    window.scaleValue = function (value, fromMin, fromMax, toMin, toMax) {
+        var toRange = toMax - toMin;
+        var fromRange = fromMax - fromMin;
+        var zeroToOne = (value - fromMin) / fromRange;
+        console.log('toRange', toRange, 'zeroToOne', zeroToOne);
+        return ((zeroToOne * toRange) + toMin).toFixed(1);
+    }
+
+    function mapFloatToDecibel(num) {
+        if (num > 0.5 && num <= 1.0) {
+            return scaleValue(num, 0.5, 1.0, -10, 10);
+        }
+        if (num > 0.25 && num < 0.5) {
+            return scaleValue(num, 0.25, 0.5, -30, -10);
+        }
+        if (num > 0.0625 && num < 0.25) {
+            return scaleValue(num, 0.0625, 0.25, -60, -30);
+        }
+        if (num > 0.0 && num < 0.0625) {
+            return scaleValue(num, 0.0, 0.0625, -90, -60);
+        }
+        if (num == 0.0) {
+            return '-∞';
+        }
+        return num;
+    }
 
     var mainContainer = $('.container');
     var leftGroup = $('<div class="container group-container justify-left"></div>');
