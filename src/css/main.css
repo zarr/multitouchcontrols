@@ -348,7 +348,7 @@ textarea {
     font-size: 3vmin;
 }
 
-body { margin: 5% 10%; }
+body { margin: 0 }
 
 .container {
     display: flex;
