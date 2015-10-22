@@ -22,7 +22,9 @@
         <div class="container"></div>
         <div class="log"></div>
 
-        <script src="http://127.0.0.1:8081/socket.io/socket.io.js"></script>
+        <script>
+            document.write('<scr' + 'ipt src="' + window.location.protocol + '//' + window.location.hostname + ':8081/socket.io/socket.io.js"></sc' + 'ript>');
+        </script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/{{JQUERY_VERSION}}/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>

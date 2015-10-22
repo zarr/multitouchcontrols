@@ -4,7 +4,7 @@ $(function () {
     function initSocket() {
         addLog('initializing connection');
         // connect to local osc bridge
-        socket = io.connect('http://127.0.0.1', { port: 8081, rememberTransport: false});
+        socket = io.connect(window.location.protocol + '//' + window.location.hostname, { port: 8081, rememberTransport: false});
         socket.on('connect', function() {
             addLog('connected!');
             // sends to socket.io server the host/port of oscServer
