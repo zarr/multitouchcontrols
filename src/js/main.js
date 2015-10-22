@@ -172,8 +172,8 @@ $(function () {
     }
 
     var mainContainer = $('.container');
-    var leftGroup = $('<div class="container group-container justify-left"></div>');
-    var rightGroup = $('<div class="container group-container justify-right"></div>');
+    var leftGroup = $('<div class="container group-container justify-left"><div class="group-header group justify-left">Caster 2</div></div>');
+    var rightGroup = $('<div class="container group-container justify-right"><div class="group-header group justify-right">Caster 1</div></div>');
 
     var group1 = $('<div class="group justify-left"></div>');
     var group2 = $('<div class="group justify-right"></div>');

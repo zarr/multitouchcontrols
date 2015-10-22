@@ -365,6 +365,11 @@ body { margin: 0 }
     flex-flow: column;
 }
 
+.group-header {
+    font-size: larger;
+    font-weight: bold;
+}
+
 .control-name {
     text-align: center;
 }
