@@ -69,12 +69,12 @@ $(function () {
     function sendMessage(parameter, value, type) {
         type = type || 'float';
         var message;
-        if (value) {
+        if (value !== undefined) {
             message = {address: parameter, args: [{type: type, value: value}]};
         } else {
             message = {address: parameter};
         }
-        addLog(parameter + ' ' + (value ? value : ''));
+        addLog(parameter + ' ' + (value !== undefined  ? value : ''));
         socket.emit('message', message);
     }
 
