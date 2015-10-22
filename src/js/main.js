@@ -85,13 +85,13 @@ $(function () {
     var events = $({});
 
     var controlWrapperTemplate = '<div class="control-wrapper"><div class="control-name"></div></div>';
-    var sliderTemplate = '<div class="slider"><div class="slider_content"></div></div>';
+    var sliderTemplate = '<div class="slider"><div class="slider_content"></div></div><div class="db-value">&nbsp;</div> ';
     var momentaryTemplate = '<div class="momentary button button-off"></div>';
     var toggleTemplate = '<div class="toggle button button-off"></div>;'
 
     function addControl(container, elementBuilder, name, parameter) {
         var control = elementBuilder(parameter);
-        var wrapped = $(controlWrapperTemplate).prepend(control);
+        var wrapped = $(controlWrapperTemplate).append(control);
         wrapped.find('.control-name').text(name);
         container.append(wrapped);
     }
@@ -132,7 +132,7 @@ $(function () {
         var element = $(sliderTemplate);
         var content = element.find('.slider_content');
         var handleValue = function (element, value, skipSend) {
-            element.attr('data-value', mapFloatToDecibel(value));
+            $(element).next().text((mapFloatToDecibel(value)) + ' dB');
             content.css('top', ((1 - value) * 100) + '%');
 
             if (!skipSend) sendMessage(parameter, value, 'float');

@@ -374,6 +374,10 @@ body { margin: 0 }
     text-align: center;
 }
 
+.db-value {
+    text-align: center;
+}
+
 .log {
     height: 4em;
     overflow: auto;
