@@ -192,8 +192,8 @@ $(function () {
         .append(group4);
 
 
-    addControl(group1, momentaryControl, 'intercom', '/ch/20/mix/on');
     addControl(group1, toggleControl, 'on air', '/ch/02/mix/on');
+    addControl(group1, momentaryControl, 'intercom', '/ch/20/mix/on');
 
     addControl(group2, momentaryControl, 'intercom', '/ch/19/mix/on');
     addControl(group2, toggleControl, 'on air', '/ch/01/mix/on');
