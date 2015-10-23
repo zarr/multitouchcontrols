@@ -1,5 +1,8 @@
 $(function () {
     addLog('loading main.js');
+    document.ontouchmove = function(event){
+        event.preventDefault();
+    }
     var socket;
     function initSocket() {
         addLog('initializing connection');
@@ -39,12 +42,13 @@ $(function () {
                 restriction: 'self'
             }
         })
-        .on('dragmove', function (event) {  // call this function on every move
+        .on('dragmove', _.throttle(function (event) {  // call this function on every move
             var sliderHeight = interact.getElementRect(event.target).height;
             var value = event.pageY / sliderHeight;
 
             $(event.target).data('handler')($(event.target), (1 - value));
-        });
+        }, 100)
+    );
 
     interact('.toggle')
         .on('tap', function (event) {
