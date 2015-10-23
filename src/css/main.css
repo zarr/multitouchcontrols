@@ -298,15 +298,15 @@ textarea {
 .slider {
     position: relative;
     display: inline-block;
-    width: 1em;
-    height: 5em;
+    width: 1.2em;
+    height: 7em;
     margin: 0 0.5em;
     overflow: hidden;
     background-color: #29e;
     border-radius: 0.5em;
     box-sizing: border-box;
 
-    font-size: 8vmin;
+    font-size: 7vmin;
 
     -ms-touch-action: none;
     touch-action: none;
